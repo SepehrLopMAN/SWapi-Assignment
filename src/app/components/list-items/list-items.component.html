@@ -1,0 +1,52 @@
+<div class="list-items-container">
+  <nav class="category-navigation">
+    <a routerLink="../people">People</a>
+    <a routerLink="../planets">Planets</a>
+    <a routerLink="../species">Species</a>
+    <a routerLink="../starships">Starships</a>
+    <a routerLink="../vehicles">Vehicles</a>
+  </nav>
+
+  <ul *ngIf="data" class="items-list">
+    <li
+      *ngFor="let item of data[currentPage]"
+      class="items-list__item"
+      (click)="navigateTo(item)"
+    >
+      {{ item.name }}
+    </li>
+  </ul>
+  <div class="pagination-buttons-container">
+    <button class="pagination__button" (click)="getPageContent(1)"><<</button>
+    <button
+      class="pagination__button"
+      (click)="getPageContent(currentPage - 1 > 0 ? currentPage - 1 : 1)"
+    >
+      <
+    </button>
+    <button
+      class="pagination__button"
+      *ngFor="let page of pages; let i = index"
+      (click)="getPageContent(page + 1)"
+      [ngClass]="{
+        'pagination__button--selected-page': this.currentPage == i + 1
+      }"
+    >
+      {{ page + 1 }}
+    </button>
+
+    <button
+      class="pagination__button"
+      (click)="
+        getPageContent(
+          currentPage + 1 <= pages.length ? currentPage + 1 : pages.length
+        )
+      "
+    >
+      >
+    </button>
+    <button class="pagination__button" (click)="getPageContent(pages.length)">
+      >>
+    </button>
+  </div>
+</div>

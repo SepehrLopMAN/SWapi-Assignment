@@ -1,0 +1,27 @@
+<div class="item-details-container">
+  <nav class="navigation--prev-page">
+    <a routerLink="..">&leftarrow; Back</a>
+  </nav>
+
+  <div *ngIf="itemError; else itemDetails">
+    <app-not-found
+      *ngIf="itemError.status === 404; else apiFailedDetails"
+    ></app-not-found>
+    <ng-template #apiFailedDetails>
+      <h1>Something went wrong!</h1>
+    </ng-template>
+  </div>
+
+  <ng-template #itemDetails>
+    <div *ngIf="itemData" class="items-container">
+      <h1 class="item-name--heading">{{ itemData.name }}</h1>
+      <ul class="info-list">
+        <ng-container *ngFor="let item of itemData | keyvalue">
+          <li class="list-item--info-details" *ngIf="item.key !== 'name'">
+            {{ item.key }}: <b> {{ item.value }} </b>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </ng-template>
+</div>
